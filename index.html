@@ -33,6 +33,12 @@
 <nav>
   <div class="navbar-brand">
     <a class="nav-link" href="#" id="nav-all">Hack or Snooze</a>
+    <span> | </span>
+    <a href="#" id="submit-link">submit</a>
+    <span> | </span>
+    <a href="#" id="favorites-link">favorites</a>
+    <span> | </span>
+    <a href="#" id="stories-link">my stories</a>  
   </div>
   <div class="nav-right">
     <a class="nav-link" href="#" id="nav-login">login/signup</a>
@@ -50,6 +56,21 @@
   <!-- List of all stories -->
   <ol id="all-stories-list" class="stories-list"></ol>
 
+</section>
+
+<section class="submit-container container">
+  <form action="" id="submit-form" class="hidden">
+    <label for="author-input">author
+      <input type="text" name="author-input" id="author-input" placeholder="author name">
+    </label>
+    <label for="title-input">title
+      <input type="text" name="title-input" id="title-input" placeholder="story title">
+    </label>
+    <label for="url-input">url
+      <input type="text" name="url-input" id="url-input" placeholder="story url">
+    </label>
+    <button id="submit-button">submit</button>
+  </form>
 </section>
 
 <!-- Login and signup forms -->

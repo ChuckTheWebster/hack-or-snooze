@@ -50,3 +50,17 @@ function putStoriesOnPage() {
 
   $allStoriesList.show();
 }
+
+function getSubmitFormData() {
+
+}
+
+function addNewStoryToPage() {
+
+}
+
+function getNewStoryAndAddToPage() {
+  // getSubmitFormData();
+  // addStory(); --> from main.js
+  // addNewStoryToPage();
+}

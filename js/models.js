@@ -84,11 +84,10 @@ class StoryList {
       "token": API_TOKEN
     });
     const story = newStory.data.story
-    // UNIMPLEMENTED: complete this function!
+
     return new Story(story.storyID, story.title, story.author, story.url,
       story.username, story.createdAt);
   }
-
 }
 
 
