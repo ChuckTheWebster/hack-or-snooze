@@ -1,7 +1,8 @@
 "use strict";
 
 const BASE_URL = "https://hack-or-snooze-v3.herokuapp.com";
-const API_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRhY29jaHVjazEzNTc5IiwiaWF0IjoxNjY4NzEyMTA0fQ.5HkZMk5ElqH5W2RmnwfQZQc3TnghtX4TAkrKqbKc0mo";
+
+// const API_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRhY29jaHVjazEzNTc5IiwiaWF0IjoxNjY4NzEyMTA0fQ.5HkZMk5ElqH5W2RmnwfQZQc3TnghtX4TAkrKqbKc0mo";
 
 
 /******************************************************************************
@@ -77,8 +78,10 @@ class StoryList {
 
   static async addStory(user, {title, author, url}) {
 
+    console.log(currentUser.token);
+
     const newStory = await axios.post(`${BASE_URL}/stories`, {
-      "token": API_TOKEN,
+      "token": currentUser.token,
       "story": {
         "username": user.username,
         "title": title,
@@ -89,7 +92,9 @@ class StoryList {
 
     const story = newStory.data.story;
 
-    return new Story(story.storyID, story.title, story.author, story.url,
+    console.log("response from API post req: ", story);
+
+    return new Story(story.storyId, story.title, story.author, story.url,
       story.username, story.createdAt);
   }
 }

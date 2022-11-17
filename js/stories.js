@@ -74,10 +74,12 @@ function addNewStoryToPage() {
   // putStoriesOnPage();
 }
 
-async function getNewStoryAndAddToPage() {
+async function getNewStoryAndAddToPage(evt) {
+  evt.preventDefault();
+  
   const submitFormData = getSubmitFormData();
   const newStory = await StoryList.addStory(currentUser.username, submitFormData);
-  storyList.unshift(newStory);
+  storyList.stories.unshift(newStory);
   putStoriesOnPage();
 
   // getSubmitFormData();
