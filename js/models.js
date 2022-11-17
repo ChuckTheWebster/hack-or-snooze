@@ -76,12 +76,10 @@ class StoryList {
    * Returns the new Story instance
    */
 
-  static async addStory(user, {title, author, url}) {
-
-    console.log(currentUser.token);
+  async addStory(user, {title, author, url}) {
 
     const newStory = await axios.post(`${BASE_URL}/stories`, {
-      "token": currentUser.token,
+      "token": currentUser.loginToken,
       "story": {
         "username": user.username,
         "title": title,
@@ -94,8 +92,8 @@ class StoryList {
 
     console.log("response from API post req: ", story);
 
-    return new Story(story.storyId, story.title, story.author, story.url,
-      story.username, story.createdAt);
+    this.stories.unshift(new Story(story.storyId, story.title, story.author, story.url,
+      story.username, story.createdAt));
   }
 }
 
