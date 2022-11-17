@@ -51,15 +51,35 @@ function putStoriesOnPage() {
   $allStoriesList.show();
 }
 
-function getSubmitFormData() {
+// const $submitLink = $("#submit-link");
+// const $submitForm = $("#submit-form");
+// const $authorInput = $("#author-input");
+// const $titleInput = $("#title-input");
+// const $urlInput = $("#url-input");
+// const $submitButton = $("#submit-button");
 
+function getSubmitFormData() {
+  return {
+    author: $authorInput.val(),
+    title: $titleInput.val(),
+    url: $urlInput.val()
+  }
 }
 
 function addNewStoryToPage() {
 
+  // storyList = await StoryList.getStories();
+  // $storiesLoadingMsg.remove();
+
+  // putStoriesOnPage();
 }
 
-function getNewStoryAndAddToPage() {
+async function getNewStoryAndAddToPage() {
+  const submitFormData = getSubmitFormData();
+  const newStory = await StoryList.addStory(submitFormData);
+  storyList.unshift(newStory);
+  putStoriesOnPage();
+
   // getSubmitFormData();
   // addStory(); --> from main.js
   // addNewStoryToPage();
