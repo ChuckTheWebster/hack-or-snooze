@@ -23,8 +23,8 @@ class Story {
 
   /** Parses hostname out of URL and returns it. */
   getHostName() {
-    // UNIMPLEMENTED: complete this function!
-    return "hostname.com";
+    const hostName = new URL(this.url).hostname;
+    return hostName;
   }
 }
 
@@ -77,18 +77,12 @@ class StoryList {
       }
     });
 
-    const story = newStory.data.story;
-
-    const newStoryObject = new Story({
-      storyId: story.storyId,
-      title: story.title,
-      author: story.author,
-      url: story.url,
-      username: story.username,
-      createdAt: story.createdAt
-    })
+    console.log("newStory:", newStory.data.story);
+    const newStoryObject = new Story(newStory.data.story);
 
     this.stories.unshift(newStoryObject);
+
+    return newStoryObject
 
   }
 }

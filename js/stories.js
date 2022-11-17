@@ -63,15 +63,19 @@ function getSubmitFormData() {
 
 /**
  * Controller function to get submit form new story
- * input and prepend (unshift) it to the top of the
+ * input and prepend it to the top of the
  * story-list.
  */
 async function getNewStoryAndAddToPage(evt) {
   evt.preventDefault();
 
   const submitFormData = getSubmitFormData();
-  await storyList.addStory(currentUser.username, submitFormData);
-  putStoriesOnPage();
+  const newStory = await storyList.addStory(currentUser.username, submitFormData);
+  const newStoryMarkup = generateStoryMarkup(newStory);
+
+  $allStoriesList.prepend(newStoryMarkup);
+  hidePageComponents();
+  $allStoriesList.show();
 }
 
 $submitButton.on('click', getNewStoryAndAddToPage);
