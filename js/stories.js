@@ -1,10 +1,9 @@
 "use strict";
 
-// This is the global list of the stories, an instance of StoryList
+// Global list of the stories, an instance of StoryList
 let storyList;
 
 /** Get and show stories when site first loads. */
-
 async function getAndShowStoriesOnStart() {
   storyList = await StoryList.getStories();
   $storiesLoadingMsg.remove();
@@ -18,7 +17,6 @@ async function getAndShowStoriesOnStart() {
  *
  * Returns the markup for the story.
  */
-
 function generateStoryMarkup(story) {
   // console.debug("generateStoryMarkup", story);
 
@@ -33,10 +31,10 @@ function generateStoryMarkup(story) {
         <small class="story-user">posted by ${story.username}</small>
       </li>
     `);
+
 }
 
 /** Gets list of stories from server, generates their HTML, and puts on page. */
-
 function putStoriesOnPage() {
   console.debug("putStoriesOnPage");
 
@@ -51,13 +49,10 @@ function putStoriesOnPage() {
   $allStoriesList.show();
 }
 
-// const $submitLink = $("#submit-link");
-// const $submitForm = $("#submit-form");
-// const $authorInput = $("#author-input");
-// const $titleInput = $("#title-input");
-// const $urlInput = $("#url-input");
-// const $submitButton = $("#submit-button");
-
+/**
+ * Collects data from submit form and returns object of data.
+ * @returns {object}
+ */
 function getSubmitFormData() {
   return {
     author: $authorInput.val(),
@@ -66,24 +61,17 @@ function getSubmitFormData() {
   }
 }
 
-function addNewStoryToPage() {
-
-  // storyList = await StoryList.getStories();
-  // $storiesLoadingMsg.remove();
-
-  // putStoriesOnPage();
-}
-
+/**
+ * Controller function to get submit form new story
+ * input and prepend (unshift) it to the top of the
+ * story-list.
+ */
 async function getNewStoryAndAddToPage(evt) {
   evt.preventDefault();
 
   const submitFormData = getSubmitFormData();
   await storyList.addStory(currentUser.username, submitFormData);
   putStoriesOnPage();
-
-  // getSubmitFormData();
-  // addStory(); --> from main.js
-  // addNewStoryToPage();
 }
 
 $submitButton.on('click', getNewStoryAndAddToPage);

@@ -5,7 +5,6 @@
  */
 
 /** Show main list of all stories when click site name */
-
 function navAllStories(evt) {
   console.debug("navAllStories", evt);
   evt.preventDefault();
@@ -16,7 +15,6 @@ function navAllStories(evt) {
 $body.on("click", "#nav-all", navAllStories);
 
 /** show submit new story form */
-
 function navSubmitLinkClick(evt) {
   evt.preventDefault();
   hidePageComponents();
@@ -26,7 +24,6 @@ function navSubmitLinkClick(evt) {
 $submitLink.on("click", navSubmitLinkClick);
 
 /** Show login/signup on click on "login" */
-
 function navLoginClick(evt) {
   console.debug("navLoginClick", evt);
   evt.preventDefault();
@@ -38,7 +35,6 @@ function navLoginClick(evt) {
 $navLogin.on("click", navLoginClick);
 
 /** When a user first logins in, update the navbar to reflect that. */
-
 function updateNavOnLogin() {
   console.debug("updateNavOnLogin");
   $(".main-nav-links").show();
