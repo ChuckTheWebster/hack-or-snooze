@@ -84,7 +84,7 @@ $submitButton.on('click', getNewStoryAndAddToPage);
 /**
  * takes the passed star jquery object and toggles it classes: filled to outlined
  * and outlined to filled
- * @param {jquery object} $star 
+ * @param {jquery object} $star
  */
 function toggleStar($star) {
   $star.toggleClass("bi-star").toggleClass("bi-star-fill");
@@ -93,23 +93,30 @@ function toggleStar($star) {
 /**
  * adds a new favorite if the provided id is not in the current users favorites;
  * removes an existing story if the id is already in the favorites
- * @param {strubg} id - story id 
+ * @param {string} id - story id
  */
 function addOrDeleteFavorite(id) {
+  console.log({currentUser});
+  console.log(currentUser.favorites);
+  if (currentUser.favorites.some(story => story.id === id)) {
+    currentUser.removeFavoriteApi(id);
+  } else {
+    currentUser.addFavoriteApi(id);
+  }
   // check if currently in favorites
-  // 
+  //
   // we stopped here - figure out how to loop through favorites and see if
   // the passed id is included in any of the stories in favorites
   //
   console.log(currentUser.favorites);
   // if it is, remove it from local array and make "remove" API call
   // if it isn't, add it to local array and make "add" API call
-}
 
+}
 /**
  * controller function for star symbols listener; toggles the star between
  * filled/outlined and makes the appropriate post/delete API call
- * @param {evt} evt 
+ * @param {evt} evt
  */
 function toggleSymbolAndChangeFavorite(evt) {
   evt.preventDefault();

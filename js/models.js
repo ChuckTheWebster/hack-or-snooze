@@ -68,12 +68,12 @@ class StoryList {
   async addStory(user, {title, author, url}) {
 
     const newStory = await axios.post(`${BASE_URL}/stories`, {
-      "token": currentUser.loginToken,
-      "story": {
-        "username": user.username,
-        "title": title,
-        "author": author,
-        "url": url,
+      token: currentUser.loginToken,
+      story: {
+        username: user.username,
+        title: title,
+        author: author,
+        url: url,
       }
     });
 
@@ -202,27 +202,35 @@ class User {
    * takes passed Story instance and ADDS it to user's favorites
    * through a POST API request
    */
-  async addFavorite(storyId) {
-    let addFave = await axios.post(`${BASE_URL}/users/${this.username}/favorites/${storyId}`, {token: this.loginToken});
+  async addFavoriteApi(id) {
+    let addFave = await axios.post(`${BASE_URL}/users/${this.username}/favorites/${id}`, {token: this.loginToken});
+  }
+
+  /**
+   *
+   * @param {*} story
+   */
+  addFavoriteLocal(story) {
+    this.favorites.push(story);
   }
 
   /**
   * takes passed Story instance and REMOVES it from user's favorites
   * through a DELETE API request
   */
-  async removeFavorite(storyId) {
-    console.log(this.loginToken);
-    let removeFave = await axios.delete(`${BASE_URL}/users/${this.username}/favorites/${storyId}`, {data: {token: this.loginToken}});
+  async removeFavoriteApi(id) {
+    let removeFave = await axios.delete(`${BASE_URL}/users/${this.username}/favorites/${id}`, {data: {token: this.loginToken}});
   }
 
-// axios.request(config)
-// axios.get(url[, config])
-// axios.delete(url[, config])
-// axios.head(url[, config])
-// axios.options(url[, config])
-// axios.post(url[, data[, config]])
-// axios.put(url[, data[, config]])
-// axios.patch(url[, data[, config]])
+  /**
+   *
+   * @param {*} story
+   */
+  removeFavoriteLocal(story) {
+    const faveIndex = this.favorites.find(fave => fave.storyId === story.storyId);//find the index of the story
+    this.favorites.splice(faveIndex, 1);
+  }
+
 }
 
 
@@ -232,3 +240,12 @@ class User {
     //  **not** an instance method. Rather, it is a method that is called on the
     //  class directly. Why doesn't it make sense for getStories to be an
     //  instance method?
+
+    // axios.request(config)
+// axios.get(url[, config])
+// axios.delete(url[, config])
+// axios.head(url[, config])
+// axios.options(url[, config])
+// axios.post(url[, data[, config]])
+// axios.put(url[, data[, config]])
+// axios.patch(url[, data[, config]])
