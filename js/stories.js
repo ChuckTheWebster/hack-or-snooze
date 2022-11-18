@@ -8,7 +8,7 @@ async function getAndShowStoriesOnStart() {
   storyList = await StoryList.getStories();
   $storiesLoadingMsg.remove();
 
-  putStoriesOnPage();
+  putStoriesOnPage($allStoriesList, storyList.stories);
 }
 
 /**
@@ -41,19 +41,34 @@ function generateStoryMarkup(story) {
 }
 
 /** Gets list of stories from server, generates their HTML, and puts on page. */
-function putStoriesOnPage() {
+function putStoriesOnPage(toEmpty, toMarkup) {
   console.debug("putStoriesOnPage");
 
-  $allStoriesList.empty();
+  toEmpty.empty();
 
   // loop through all of our stories and generate HTML for them
-  for (let story of storyList.stories) {
+  for (let story of toMarkup) {
     const $story = generateStoryMarkup(story);
-    $allStoriesList.append($story);
+    toEmpty.append($story);
   }
 
-  $allStoriesList.show();
+  toEmpty.show();
 }
+
+// /** Gets list of stories from server, generates their HTML, and puts on page. */
+// function putStoriesOnPage() {
+//   console.debug("putStoriesOnPage");
+
+//   $allStoriesList.empty();
+
+//   // loop through all of our stories and generate HTML for them
+//   for (let story of storyList.stories) {
+//     const $story = generateStoryMarkup(story);
+//     $allStoriesList.append($story);
+//   }
+
+//   $allStoriesList.show();
+// }
 
 /**
  * Collects data from submit form and returns object of data.
@@ -89,7 +104,7 @@ $submitButton.on('click', getNewStoryAndAddToPage);
 /**
  * takes in a story object and determines if it exists in the current user's
  * favorites list
- * @param {object} fave - instance of Story class 
+ * @param {object} fave - instance of Story class
  * @returns true if in user favorites; false if not
  */
 function checkIfStoryInUserFavorites(fave) {
@@ -125,10 +140,12 @@ function addOrDeleteFavorite(clickedStory) {
   }
 }
 
+
+
 /**
  * finds and returns the story with the given id in the provided list
- * @param {array} list 
- * @param {string} id 
+ * @param {array} list
+ * @param {string} id
  * @returns story in list with the given id
  */
 function findStoryAtId(list, id) {
@@ -154,4 +171,4 @@ function toggleSymbolAndChangeFavorite(evt) {
 }
 
 
-$allStoriesList.on('click', "i", toggleSymbolAndChangeFavorite);
+$allStoriesContainer.on('click', "i", toggleSymbolAndChangeFavorite);
