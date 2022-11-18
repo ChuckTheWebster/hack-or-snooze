@@ -23,6 +23,16 @@ function navSubmitLinkClick(evt) {
 
 $submitLink.on("click", navSubmitLinkClick);
 
+/** show list of user favorites */
+function navFaveLinkClick(evt) {
+  evt.preventDefault();
+  hidePageComponents();
+  $favoriteContainer.show();
+}
+
+
+$faveLink.on("click", navFaveLinkClick);
+
 /** Show login/signup on click on "login" */
 function navLoginClick(evt) {
   console.debug("navLoginClick", evt);

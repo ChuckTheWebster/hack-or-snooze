@@ -14,6 +14,9 @@ const $titleInput = $("#title-input");
 const $urlInput = $("#url-input");
 const $submitButton = $("#submit-button");
 
+const $faveLink = $("#favorites-link");
+const $favoriteContainer = $("#favorite-container");
+
 const $loginForm = $("#login-form");
 const $signupForm = $("#signup-form");
 
