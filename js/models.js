@@ -197,19 +197,20 @@ class User {
       return null;
     }
   }
-
+  
   /**
-   * takes passed Story instance and ADDS it to user's favorites
-   * through a POST API request
+   * toggles a story on/off the user's favorite story list on the API
+   * @param {instance} story - instance of the Story class; to be added or removed 
+   * @param {string} action - "post" or "delete", depending on the need
    */
-  async addFavoriteApi(story) {
+  async toggleFavoriteApi(story, action) {
     await axios({
-      method: "post",
+      method: action,
       url: `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
       data: {
         token: this.loginToken
       }
-    })
+    })    
   }
 
   /**
@@ -218,20 +219,6 @@ class User {
    */
   addFavoriteLocal(story) {
     this.favorites.push(story);
-  }
-
-  /**
-  * takes passed Story instance and REMOVES it from user's favorites
-  * through a DELETE API request
-  */
-  async removeFavoriteApi(story) {
-    await axios({
-      method: "delete",
-      url: `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
-      data: {
-        token: this.loginToken
-      }
-    })
   }
 
   /**

@@ -20,15 +20,9 @@ async function getAndShowStoriesOnStart() {
 function generateStoryMarkup(story) {
   // console.debug("generateStoryMarkup", story);
 
-  let starMarkup = "bi-star"; // default is not filled
-  if (checkIfStoryInUserFavorites(story)) {
-    starMarkup = "bi-star-fill"; // change to filled if favorite
-  }
-
   const hostName = story.getHostName();
-  return $(`
+  const $markUp = $(`
       <li id="${story.storyId}">
-        <i class="bi ${starMarkup}"></i>
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -37,6 +31,21 @@ function generateStoryMarkup(story) {
         <small class="story-user">posted by ${story.username}</small>
       </li>
     `);
+
+    if (currentUser) {
+      $markUp.prepend(generateStar(story));
+    }
+
+  return $markUp;
+}
+
+function generateStar(story) {
+  let starMarkup = "bi-star"; // default is not filled
+  if (checkIfStoryInUserFavorites(story)) { // MOVE THIS TO USER METHOD
+    starMarkup = "bi-star-fill"; // change to filled if favorite
+  }  
+
+  return $(`<i class="bi ${starMarkup}"></i>`);
 }
 
 /**
@@ -125,14 +134,11 @@ function toggleStar($star) {
  * @param {object} clickedStory - Story instance.
  */
 async function addOrDeleteFavorite(clickedStory) {
-  //ADD AWAIT
-
-
   if (checkIfStoryInUserFavorites(clickedStory)) {
-    currentUser.removeFavoriteApi(clickedStory);
+    await currentUser.toggleFavoriteApi(clickedStory, "delete");
     currentUser.removeFavoriteLocal(clickedStory);
   } else {
-    currentUser.addFavoriteApi(clickedStory);
+    await currentUser.toggleFavoriteApi(clickedStory, "post");
     currentUser.addFavoriteLocal(clickedStory);
   }
 }
@@ -154,8 +160,7 @@ function findStoryAtId(list, id) {
  * @param {evt} evt
  */
 async function toggleSymbolAndChangeFavorite(evt) {
-  // evt.preventDefault();
-
+  console.log("in the toggleSymbolAndChangeFavorite function")
   const $star = $(evt.target);
   const clickedStoryId = $star.parent().attr("id");
   const clickedStory = findStoryAtId(storyList.stories, clickedStoryId);
