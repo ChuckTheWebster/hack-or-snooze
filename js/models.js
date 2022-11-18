@@ -227,7 +227,7 @@ class User {
    * @param {*} story
    */
   removeFavoriteLocal(story) {
-    const faveIndex = this.favorites.find(fave => fave.storyId === story.storyId);//find the index of the story
+    const faveIndex = this.favorites.findIndex(fave => fave.storyId === story.storyId);
     this.favorites.splice(faveIndex, 1);
   }
 

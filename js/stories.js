@@ -20,10 +20,15 @@ async function getAndShowStoriesOnStart() {
 function generateStoryMarkup(story) {
   // console.debug("generateStoryMarkup", story);
 
+  let starMarkup = "bi-star"; // default is not filled
+  if (checkIfStoryInUserFavorites(story)) {
+    starMarkup = "bi-star-fill"; // change to filled if favorite
+  }
+
   const hostName = story.getHostName();
   return $(`
       <li id="${story.storyId}">
-        <i class="bi bi-star"></i>
+        <i class="bi ${starMarkup}"></i>
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -82,6 +87,20 @@ async function getNewStoryAndAddToPage(evt) {
 $submitButton.on('click', getNewStoryAndAddToPage);
 
 /**
+ * takes in a story object and determines if it exists in the current user's
+ * favorites list
+ * @param {object} fave - instance of Story class 
+ * @returns true if in user favorites; false if not
+ */
+function checkIfStoryInUserFavorites(fave) {
+  if (currentUser.favorites.some(story => story.storyId === fave.storyId)) {
+    return true;
+  }
+
+  return false;
+}
+
+/**
  * takes the passed star jquery object and toggles it classes: filled to outlined
  * and outlined to filled
  * @param {jquery object} $star
@@ -95,37 +114,43 @@ function toggleStar($star) {
  * removes an existing story if the id is already in the favorites
  * @param {string} id - story id
  */
-function addOrDeleteFavorite(id) {
-  console.log({currentUser});
-  console.log(currentUser.favorites);
-  if (currentUser.favorites.some(story => story.id === id)) {
-    currentUser.removeFavoriteApi(id);
-  } else {
-    currentUser.addFavoriteApi(id);
-  }
-  // check if currently in favorites
-  //
-  // we stopped here - figure out how to loop through favorites and see if
-  // the passed id is included in any of the stories in favorites
-  //
-  console.log(currentUser.favorites);
-  // if it is, remove it from local array and make "remove" API call
-  // if it isn't, add it to local array and make "add" API call
+function addOrDeleteFavorite(clickedStory) {
 
+  if (checkIfStoryInUserFavorites(clickedStory)) {
+    currentUser.removeFavoriteApi(clickedStory.storyId);
+    currentUser.removeFavoriteLocal(clickedStory);
+  } else {
+    currentUser.addFavoriteApi(clickedStory.storyId);
+    currentUser.addFavoriteLocal(clickedStory);
+  }
 }
+
+/**
+ * finds and returns the story with the given id in the provided list
+ * @param {array} list 
+ * @param {string} id 
+ * @returns story in list with the given id
+ */
+function findStoryAtId(list, id) {
+  return list.find(story => story.storyId === id);
+}
+
 /**
  * controller function for star symbols listener; toggles the star between
- * filled/outlined and makes the appropriate post/delete API call
+ * filled/outlined and makes the appropriate post/delete API call and adjustments
+ * to local favorites storage
  * @param {evt} evt
  */
 function toggleSymbolAndChangeFavorite(evt) {
-  evt.preventDefault();
+  // evt.preventDefault();
 
   const $star = $(evt.target);
   toggleStar($star);
-  const storyId = $star.parent().attr("id");
-  addOrDeleteFavorite(storyId);
-  // logic to determine if story should be added or removed
+
+  const clickedStoryId = $star.parent().attr("id");
+  const clickedStory = findStoryAtId(storyList.stories, clickedStoryId);
+
+  addOrDeleteFavorite(clickedStory);
 }
 
 
