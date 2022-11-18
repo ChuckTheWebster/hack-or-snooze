@@ -37,7 +37,6 @@ function generateStoryMarkup(story) {
         <small class="story-user">posted by ${story.username}</small>
       </li>
     `);
-
 }
 
 /**

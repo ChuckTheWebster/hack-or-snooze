@@ -213,7 +213,7 @@ class User {
   }
 
   /**
-   *
+   * add favorite to local storage
    * @param {*} story
    */
   addFavoriteLocal(story) {
@@ -235,7 +235,7 @@ class User {
   }
 
   /**
-   *
+   * remove passed story from the user's locally-stored favorites list
    * @param {*} story
    */
   removeFavoriteLocal(story) {
