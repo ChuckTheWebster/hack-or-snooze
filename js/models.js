@@ -202,17 +202,17 @@ class User {
    * takes passed Story instance and ADDS it to user's favorites
    * through a POST API request
    */
-  async addFavorite(story) {
-    let addFave = await axios.post(`${BASE_URL}/users/${this.username}/favorites/${story.storyId}`, {token: this.loginToken});
+  async addFavorite(storyId) {
+    let addFave = await axios.post(`${BASE_URL}/users/${this.username}/favorites/${storyId}`, {token: this.loginToken});
   }
 
   /**
   * takes passed Story instance and REMOVES it from user's favorites
   * through a DELETE API request
   */
-  async removeFavorite(story) {
+  async removeFavorite(storyId) {
     console.log(this.loginToken);
-    let removeFave = await axios.delete(`${BASE_URL}/users/${this.username}/favorites/${story.storyId}`, {data: {token: this.loginToken}});
+    let removeFave = await axios.delete(`${BASE_URL}/users/${this.username}/favorites/${storyId}`, {data: {token: this.loginToken}});
   }
 
 // axios.request(config)
