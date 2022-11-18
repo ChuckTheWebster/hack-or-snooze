@@ -40,7 +40,7 @@ function generateStoryMarkup(story) {
 }
 
 /**
- * updates the provided jquery object list with formatted stories in the 
+ * updates the provided jquery object list with formatted stories in the
  * provided story list; posts a message instead if the passed list has no
  * stories in it
  * @param {jquery object} $displayList - jquery object where stories should go
@@ -119,18 +119,20 @@ function toggleStar($star) {
 }
 
 /**
- * adds a new favorite to API and loca storage if the provided id is not in the 
- * current users favorites; removes an existing story from API and local storage 
+ * adds a new favorite to API and loca storage if the provided id is not in the
+ * current users favorites; removes an existing story from API and local storage
  * if the id is already in the favorites
  * @param {object} clickedStory - Story instance.
  */
-function addOrDeleteFavorite(clickedStory) {
+async function addOrDeleteFavorite(clickedStory) {
+  //ADD AWAIT
+
 
   if (checkIfStoryInUserFavorites(clickedStory)) {
-    currentUser.removeFavoriteApi(clickedStory.storyId);
+    currentUser.removeFavoriteApi(clickedStory);
     currentUser.removeFavoriteLocal(clickedStory);
   } else {
-    currentUser.addFavoriteApi(clickedStory.storyId);
+    currentUser.addFavoriteApi(clickedStory);
     currentUser.addFavoriteLocal(clickedStory);
   }
 }
@@ -151,16 +153,21 @@ function findStoryAtId(list, id) {
  * to local favorites storage
  * @param {evt} evt
  */
-function toggleSymbolAndChangeFavorite(evt) {
+async function toggleSymbolAndChangeFavorite(evt) {
   // evt.preventDefault();
 
   const $star = $(evt.target);
-  toggleStar($star);
-
   const clickedStoryId = $star.parent().attr("id");
   const clickedStory = findStoryAtId(storyList.stories, clickedStoryId);
 
-  addOrDeleteFavorite(clickedStory);
+  try {
+    await addOrDeleteFavorite(clickedStory);
+
+  } catch(err) {
+    return
+  }
+
+  toggleStar($star);
 }
 
 $allStoriesContainer.on('click', "i", toggleSymbolAndChangeFavorite);

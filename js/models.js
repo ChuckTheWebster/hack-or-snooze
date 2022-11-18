@@ -202,10 +202,10 @@ class User {
    * takes passed Story instance and ADDS it to user's favorites
    * through a POST API request
    */
-  async addFavoriteApi(id) {
+  async addFavoriteApi(story) {
     await axios({
       method: "post",
-      url: `${BASE_URL}/users/${this.username}/favorites/${id}`,
+      url: `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
       data: {
         token: this.loginToken
       }
@@ -224,10 +224,10 @@ class User {
   * takes passed Story instance and REMOVES it from user's favorites
   * through a DELETE API request
   */
-  async removeFavoriteApi(id) {
+  async removeFavoriteApi(story) {
     await axios({
       method: "delete",
-      url: `${BASE_URL}/users/${this.username}/favorites/${id}`,
+      url: `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
       data: {
         token: this.loginToken
       }
@@ -239,8 +239,7 @@ class User {
    * @param {*} story
    */
   removeFavoriteLocal(story) {
-    const faveIndex = this.favorites.findIndex(fave => fave.storyId === story.storyId);
-    this.favorites.splice(faveIndex, 1);
+    this.favorites = this.favorites.filter(fave => fave.storyId !== story.storyId);
   }
 
 }
