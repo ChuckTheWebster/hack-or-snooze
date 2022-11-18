@@ -14,6 +14,7 @@ function navAllStories(evt) {
 
 $body.on("click", "#nav-all", navAllStories);
 
+
 /** show submit new story form */
 function navSubmitLinkClick(evt) {
   evt.preventDefault();
@@ -23,6 +24,7 @@ function navSubmitLinkClick(evt) {
 
 $submitLink.on("click", navSubmitLinkClick);
 
+
 /** show list of user favorites */
 function navFaveLinkClick(evt) {
   evt.preventDefault();
@@ -31,8 +33,8 @@ function navFaveLinkClick(evt) {
   $favoriteContainer.show();
 }
 
-
 $faveLink.on("click", navFaveLinkClick);
+
 
 /** Show login/signup on click on "login" */
 function navLoginClick(evt) {
@@ -44,6 +46,7 @@ function navLoginClick(evt) {
 }
 
 $navLogin.on("click", navLoginClick);
+
 
 /** When a user first logins in, update the navbar to reflect that. */
 function updateNavOnLogin() {

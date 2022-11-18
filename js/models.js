@@ -203,7 +203,7 @@ class User {
    * through a POST API request
    */
   async addFavoriteApi(id) {
-    let addFave = await axios.post(`${BASE_URL}/users/${this.username}/favorites/${id}`, {token: this.loginToken});
+    await axios.post(`${BASE_URL}/users/${this.username}/favorites/${id}`, {token: this.loginToken});
   }
 
   /**
@@ -219,7 +219,7 @@ class User {
   * through a DELETE API request
   */
   async removeFavoriteApi(id) {
-    let removeFave = await axios.delete(`${BASE_URL}/users/${this.username}/favorites/${id}`, {data: {token: this.loginToken}});
+    await axios.delete(`${BASE_URL}/users/${this.username}/favorites/${id}`, {data: {token: this.loginToken}});
   }
 
   /**

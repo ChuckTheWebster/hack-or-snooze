@@ -40,35 +40,26 @@ function generateStoryMarkup(story) {
 
 }
 
-/** Gets list of stories from server, generates their HTML, and puts on page. */
-function putStoriesOnPage(toEmpty, toMarkup) {
+/**
+ * updates the provided jquery object list with formatted stories in the 
+ * provided story list
+ * @param {jquery object} $displayList - jquery object where stories should go
+ * @param {array} storyList - list of Story instances to be formatted
+ */
+function putStoriesOnPage($displayList, storyList) {
   console.debug("putStoriesOnPage");
 
-  toEmpty.empty();
+  $displayList.empty();
 
   // loop through all of our stories and generate HTML for them
-  for (let story of toMarkup) {
+  for (let story of storyList) {
     const $story = generateStoryMarkup(story);
-    toEmpty.append($story);
+    $displayList.append($story);
   }
 
-  toEmpty.show();
+  $displayList.show();
 }
 
-// /** Gets list of stories from server, generates their HTML, and puts on page. */
-// function putStoriesOnPage() {
-//   console.debug("putStoriesOnPage");
-
-//   $allStoriesList.empty();
-
-//   // loop through all of our stories and generate HTML for them
-//   for (let story of storyList.stories) {
-//     const $story = generateStoryMarkup(story);
-//     $allStoriesList.append($story);
-//   }
-
-//   $allStoriesList.show();
-// }
 
 /**
  * Collects data from submit form and returns object of data.
@@ -81,6 +72,7 @@ function getSubmitFormData() {
     url: $urlInput.val()
   }
 }
+
 
 /**
  * Controller function to get submit form new story
@@ -101,6 +93,7 @@ async function getNewStoryAndAddToPage(evt) {
 
 $submitButton.on('click', getNewStoryAndAddToPage);
 
+
 /**
  * takes in a story object and determines if it exists in the current user's
  * favorites list
@@ -115,6 +108,7 @@ function checkIfStoryInUserFavorites(fave) {
   return false;
 }
 
+
 /**
  * takes the passed star jquery object and toggles it classes: filled to outlined
  * and outlined to filled
@@ -124,10 +118,12 @@ function toggleStar($star) {
   $star.toggleClass("bi-star").toggleClass("bi-star-fill");
 }
 
+
 /**
- * adds a new favorite if the provided id is not in the current users favorites;
- * removes an existing story if the id is already in the favorites
- * @param {string} id - story id
+ * adds a new favorite to API and loca storage if the provided id is not in the 
+ * current users favorites; removes an existing story from API and local storage 
+ * if the id is already in the favorites
+ * @param {object} clickedStory - Story instance.
  */
 function addOrDeleteFavorite(clickedStory) {
 
@@ -141,7 +137,6 @@ function addOrDeleteFavorite(clickedStory) {
 }
 
 
-
 /**
  * finds and returns the story with the given id in the provided list
  * @param {array} list
@@ -151,6 +146,7 @@ function addOrDeleteFavorite(clickedStory) {
 function findStoryAtId(list, id) {
   return list.find(story => story.storyId === id);
 }
+
 
 /**
  * controller function for star symbols listener; toggles the star between
@@ -169,6 +165,5 @@ function toggleSymbolAndChangeFavorite(evt) {
 
   addOrDeleteFavorite(clickedStory);
 }
-
 
 $allStoriesContainer.on('click', "i", toggleSymbolAndChangeFavorite);
