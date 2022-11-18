@@ -42,14 +42,19 @@ function generateStoryMarkup(story) {
 
 /**
  * updates the provided jquery object list with formatted stories in the 
- * provided story list
+ * provided story list; posts a message instead if the passed list has no
+ * stories in it
  * @param {jquery object} $displayList - jquery object where stories should go
  * @param {array} storyList - list of Story instances to be formatted
  */
-function putStoriesOnPage($displayList, storyList) {
+function putStoriesOnPage($displayList, storyList, noStoryMessage="No stories found!") {
   console.debug("putStoriesOnPage");
 
   $displayList.empty();
+
+  if (!storyList.length) {
+    $displayList.text(noStoryMessage);
+  }
 
   // loop through all of our stories and generate HTML for them
   for (let story of storyList) {
@@ -59,7 +64,6 @@ function putStoriesOnPage($displayList, storyList) {
 
   $displayList.show();
 }
-
 
 /**
  * Collects data from submit form and returns object of data.
@@ -72,7 +76,6 @@ function getSubmitFormData() {
     url: $urlInput.val()
   }
 }
-
 
 /**
  * Controller function to get submit form new story
@@ -93,7 +96,6 @@ async function getNewStoryAndAddToPage(evt) {
 
 $submitButton.on('click', getNewStoryAndAddToPage);
 
-
 /**
  * takes in a story object and determines if it exists in the current user's
  * favorites list
@@ -108,7 +110,6 @@ function checkIfStoryInUserFavorites(fave) {
   return false;
 }
 
-
 /**
  * takes the passed star jquery object and toggles it classes: filled to outlined
  * and outlined to filled
@@ -117,7 +118,6 @@ function checkIfStoryInUserFavorites(fave) {
 function toggleStar($star) {
   $star.toggleClass("bi-star").toggleClass("bi-star-fill");
 }
-
 
 /**
  * adds a new favorite to API and loca storage if the provided id is not in the 
@@ -136,7 +136,6 @@ function addOrDeleteFavorite(clickedStory) {
   }
 }
 
-
 /**
  * finds and returns the story with the given id in the provided list
  * @param {array} list
@@ -146,7 +145,6 @@ function addOrDeleteFavorite(clickedStory) {
 function findStoryAtId(list, id) {
   return list.find(story => story.storyId === id);
 }
-
 
 /**
  * controller function for star symbols listener; toggles the star between

@@ -203,7 +203,13 @@ class User {
    * through a POST API request
    */
   async addFavoriteApi(id) {
-    await axios.post(`${BASE_URL}/users/${this.username}/favorites/${id}`, {token: this.loginToken});
+    await axios({
+      method: "post",
+      url: `${BASE_URL}/users/${this.username}/favorites/${id}`,
+      data: {
+        token: this.loginToken
+      }
+    })
   }
 
   /**
@@ -219,7 +225,13 @@ class User {
   * through a DELETE API request
   */
   async removeFavoriteApi(id) {
-    await axios.delete(`${BASE_URL}/users/${this.username}/favorites/${id}`, {data: {token: this.loginToken}});
+    await axios({
+      method: "delete",
+      url: `${BASE_URL}/users/${this.username}/favorites/${id}`,
+      data: {
+        token: this.loginToken
+      }
+    })
   }
 
   /**

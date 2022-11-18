@@ -47,20 +47,6 @@
   </div>
 </nav>
 
-
-<!-- area for stories (all stories, user stories, favorites) -->
-<section class="stories-container container">
-
-  <!-- loading message (removed by JS after stories loaded) -->
-  <div id="stories-loading-msg">Loading&hellip;</div>
-
-  <!-- List of all stories -->
-  <ol id="all-stories-list" class="stories-list"></ol>
-
-  <ol class="stories-list hidden" id="favorite-container"></ol>
-
-</section>
-
 <section class="submit-container container">
   <form action="" id="submit-form" class="hidden">
     <label for="author-input">author
@@ -76,7 +62,18 @@
   </form>
 </section>
 
+<!-- area for stories (all stories, user stories, favorites) -->
+<section class="stories-container container">
 
+  <!-- loading message (removed by JS after stories loaded) -->
+  <div id="stories-loading-msg">Loading&hellip;</div>
+
+  <!-- List of all stories -->
+  <ol id="all-stories-list" class="stories-list"></ol>
+
+  <ol class="stories-list" id="favorite-container"></ol>
+
+</section>
 
 <!-- Login and signup forms -->
 <section class="account-forms-container container">
