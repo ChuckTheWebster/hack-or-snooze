@@ -41,9 +41,9 @@ function generateStoryMarkup(story) {
 
 function generateStar(story) {
   let starMarkup = "bi-star"; // default is not filled
-  if (checkIfStoryInUserFavorites(story)) { // MOVE THIS TO USER METHOD
+  if (currentUser.checkIfStoryInUserFavorites(story)) { // MOVE THIS TO USER METHOD
     starMarkup = "bi-star-fill"; // change to filled if favorite
-  }  
+  }
 
   return $(`<i class="bi ${starMarkup}"></i>`);
 }
@@ -104,19 +104,7 @@ async function getNewStoryAndAddToPage(evt) {
 
 $submitButton.on('click', getNewStoryAndAddToPage);
 
-/**
- * takes in a story object and determines if it exists in the current user's
- * favorites list
- * @param {object} fave - instance of Story class
- * @returns true if in user favorites; false if not
- */
-function checkIfStoryInUserFavorites(fave) {
-  if (currentUser.favorites.some(story => story.storyId === fave.storyId)) {
-    return true;
-  }
 
-  return false;
-}
 
 /**
  * takes the passed star jquery object and toggles it classes: filled to outlined
@@ -134,7 +122,7 @@ function toggleStar($star) {
  * @param {object} clickedStory - Story instance.
  */
 async function addOrDeleteFavorite(clickedStory) {
-  if (checkIfStoryInUserFavorites(clickedStory)) {
+  if (currentUser.checkIfStoryInUserFavorites(clickedStory)) {
     await currentUser.toggleFavoriteApi(clickedStory, "delete");
     currentUser.removeFavoriteLocal(clickedStory);
   } else {

@@ -197,10 +197,10 @@ class User {
       return null;
     }
   }
-  
+
   /**
    * toggles a story on/off the user's favorite story list on the API
-   * @param {instance} story - instance of the Story class; to be added or removed 
+   * @param {instance} story - instance of the Story class; to be added or removed
    * @param {string} action - "post" or "delete", depending on the need
    */
   async toggleFavoriteApi(story, action) {
@@ -210,7 +210,7 @@ class User {
       data: {
         token: this.loginToken
       }
-    })    
+    })
   }
 
   /**
@@ -228,6 +228,20 @@ class User {
   removeFavoriteLocal(story) {
     this.favorites = this.favorites.filter(fave => fave.storyId !== story.storyId);
   }
+
+  /**
+ * takes in a story object and determines if it exists in the current user's
+ * favorites list
+ * @param {object} fave - instance of Story class
+ * @returns true if in user favorites; false if not
+ */
+checkIfStoryInUserFavorites(fave) {
+  if (currentUser.favorites.some(story => story.storyId === fave.storyId)) {
+    return true;
+  }
+
+  return false;
+}
 
 }
 
